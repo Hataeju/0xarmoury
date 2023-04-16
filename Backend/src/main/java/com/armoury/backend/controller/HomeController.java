@@ -15,9 +15,15 @@ public class HomeController {
 
     @GetMapping("/api/test")
     public String test() {
-        System.out.println("===test===");
+        System.out.println("===Test===");
         //System.out.println(restTemplateService.mitreTest());
         return restTemplateService.mitreTest();
+    }
+
+    @GetMapping("/api/techniques")
+    public String Techniques() {
+        System.out.println("===Techniques===");
+        return restTemplateService.mitreTechniques();
     }
 
 }

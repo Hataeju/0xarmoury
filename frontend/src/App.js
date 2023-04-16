@@ -7,7 +7,7 @@ function App() {
   const [jsonData, setHello] = useState('')
 
   useEffect(() => {
-      axios.get('/api/test')
+      axios.get('/api/techniques')
       .then(response => setHello(response.data))
       .catch(error => console.log(error))
   }, []);
@@ -18,6 +18,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>
+          MITRE ATT&CK Json file
         </p>
         <div>
             {JSON.stringify(jsonData)}

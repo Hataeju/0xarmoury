@@ -34,4 +34,23 @@ public class RestTemplateServiceImpl implements RestTemplateService {
         System.out.println(responseEntity.getBody());
         return responseEntity.getBody();
     }
+
+    @Override
+    public String mitreTechniques() {
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:5000")
+                .path("/mitre/techniques")
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
+
+        LOGGER.info("status code : {}", responseEntity.getStatusCode());
+        LOGGER.info("body : {}", responseEntity.getBody());
+        System.out.println("==========Test============");
+        System.out.println(responseEntity.getBody());
+        return responseEntity.getBody();
+    }
 }
