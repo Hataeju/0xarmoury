@@ -21,3 +21,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# __pycache__ 실행파일 무시
+*.pyc
+
+# pycache log 무시
+*.log
+
+# package-lock.json 삭제
+package-lock.json
+
+# env 삭제:
+env/

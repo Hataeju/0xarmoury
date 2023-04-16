@@ -4,10 +4,10 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 function App() {
-  const [hello, setHello] = useState('')
+  const [jsonData, setHello] = useState('')
 
   useEffect(() => {
-      axios.get('/api/hello')
+      axios.get('/api/test')
       .then(response => setHello(response.data))
       .catch(error => console.log(error))
   }, []);
@@ -20,7 +20,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-            백엔드에서 가져온 데이터입니다 : {hello}
+            {JSON.stringify(jsonData)}
         </div>
       </header>
     </div>
