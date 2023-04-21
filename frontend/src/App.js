@@ -7,7 +7,7 @@ function App() {
   const [jsonData, setHello] = useState('')
 
   useEffect(() => {
-      axios.get('/api/techniques')
+      axios.get('/api/test')
       .then(response => setHello(response.data))
       .catch(error => console.log(error))
   }, []);
