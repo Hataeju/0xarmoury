@@ -1,5 +1,9 @@
 # Usage
 ```bash
+// SpringBoot
+cd Backend
+java -jar Backend-0.0.1-SNAPSHOT.jar
+
 // React
 cd frontend
 npm install http-proxy-middleware --save  
