@@ -18,6 +18,8 @@ nohup java -jar build/libs/Backend-0.0.1-SNAPSHOT.jar &
 cd Backend/src/main/python
 pip install -r requests.txt
 nohup python3 run.py &
+
+log >> nohup.out
 ```
 
 React Server : 3000
