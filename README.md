@@ -5,10 +5,10 @@ cd frontend
 npm install http-proxy-middleware --save  
 npm install axios --save  
 npm start  
-'''
+```
 
 * EC2
-'''
+```basg
 // SpringBoot
 cd Backend
 ./gradlew clean build
