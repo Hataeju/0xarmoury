@@ -17,7 +17,9 @@ function MainPage(){
             <header className="App-header">
                 <h3>This is main Page</h3>
 
-                <Link to = './SignIn'>SignIn</Link>
+                <Link to = './SignIn'>
+                    <button>SignIn</button>
+                </Link>
 
                 <p>
                     MITRE ATT&CK Json file
