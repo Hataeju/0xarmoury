@@ -21,6 +21,10 @@ function MainPage(){
                     <button>SignIn</button>
                 </Link>
 
+                <Link to = './SignUp'>
+                    <button>SignUp</button>
+                </Link>
+
                 <p>
                     MITRE ATT&CK Json file
                 </p>
