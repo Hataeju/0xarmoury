@@ -27,11 +27,17 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Button startIcon={<img src="/img/armoury_logo.png" alt="Armoury" width={60} height={60}/>} sx={{
-        margin: 3}}
-      >
-       0xARMOURY
-      </Button>
+      {/* 홈버튼 */}
+      <Link href="/">
+        <Button startIcon={<img src="/img/armoury_logo.png" alt="Armoury" width={60} height={60}/>} sx={{
+          margin: 1,
+          fontSize:30,
+          color:'black',}}
+        >
+        <strong>0xARMOURY</strong>
+        </Button>
+      </Link>
+
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
