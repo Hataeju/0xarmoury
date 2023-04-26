@@ -1,7 +1,7 @@
 package com.armoury.backend.controller;
 
 import com.armoury.backend.dto.MemberDTO;
-import com.armoury.backend.service.MemberService
+import com.armoury.backend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
