@@ -27,11 +27,16 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+    {/*Home button*/}
+    <Link href="/">    
     <Button startIcon={<img src="/img/armoury_logo.png" alt="Armoury" width={60} height={60}/>} sx={{
-      margin:3
+      margin:1
+      ,fontSize:30
+      ,color:"black"
       }}>
-      0xARMOURY
+      <strong>0xARMOURY</strong>
     </Button>
+    </Link>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
