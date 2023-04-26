@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
 const theme = createTheme();
 
 export default function SignIn() {
@@ -28,7 +27,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Button variant="outlined" sx={{
+      <Button startIcon={<img src="/img/armoury_logo.png" alt="Armoury" width={60} height={60}/>} sx={{
         margin: 3}}
       >
        0xARMOURY
