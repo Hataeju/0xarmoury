@@ -32,17 +32,17 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 15,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor:'white',width: 64, height: 64}}>
+            <LockOutlinedIcon sx={{ fontSize: '60px', color: 'black' }}/>
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
+          <Typography component="h1" fontSize={'30px'}>
+            <strong>Sign Up</strong>
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -104,7 +104,7 @@ export default function SignUp() {
                   fullWidth
                   name="confirmPassword"
                   label="Confirm Password"
-                  type="confirmPassword"
+                  type="Password"
                   id="confirmPassword"
                   autoComplete="new-confirmPassword"
                 />
@@ -115,14 +115,14 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor:"#363636" }}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="./SignIn" variant="body2">
-                  Already have an account? Sign in
+                <Link href="./SignIn" variant="body2" color='#0000A5'>
+                  {"Already have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>
