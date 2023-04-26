@@ -32,17 +32,17 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 15,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: 'white', width:64, height:64}}>
+            <LockOutlinedIcon sx={{fontSize: "60px", color: 'black'}} />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" fontSize='30px'>
+            <strong>Sign In</strong>
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -73,7 +73,7 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor: '#363636' }}
             >
               Sign In
             </Button>
@@ -82,7 +82,7 @@ export default function SignIn() {
                 
               </Grid>
               <Grid item>
-                <Link href="./SignUp" variant="body2">
+                <Link href="./SignUp" variant="body2" color='#0000A5'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
