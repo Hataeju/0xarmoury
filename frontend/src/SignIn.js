@@ -28,11 +28,16 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Button variant="outlined" sx={{
+        margin: 3}}
+      >
+       0xARMOURY
+      </Button>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 15,
+            marginTop: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
