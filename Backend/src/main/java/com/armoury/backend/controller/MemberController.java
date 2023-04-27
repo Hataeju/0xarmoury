@@ -1,15 +1,10 @@
 package com.armoury.backend.controller;
 
 import com.armoury.backend.config.BaseResponse;
-import com.armoury.backend.dto.MemberDTO;
-import com.armoury.backend.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
