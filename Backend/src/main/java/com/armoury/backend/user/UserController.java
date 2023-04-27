@@ -22,16 +22,11 @@ public class UserController {
     private final UserProvider userProvider;
     @Autowired
     private final UserService userService;
-    @Autowired
-    private final JwtService jwtService;
 
 
-
-
-    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService){
+    public UserController(UserProvider userProvider, UserService userService){
         this.userProvider = userProvider;
         this.userService = userService;
-        this.jwtService = jwtService;
     }
 
 

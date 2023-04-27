@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static com.example.demo.config.BaseResponseStatus.SUCCESS;
+import static com.armoury.backend.config.BaseResponseStatus.SUCCESS;
+
 
 @Getter
 @AllArgsConstructor
@@ -34,4 +35,3 @@ public class BaseResponse<T> {
         this.code = status.getCode();
     }
 }
-
