@@ -84,6 +84,7 @@ export default function SignUp() {
     if (!nameRegex.test(Name) || Name.length < 1) setNameError('올바른 이름을 입력해주세요.');
     else setNameError('');
 
+    //닉네임 유효성 체크
     if (nickname.length < 1) setnicknameError('닉네임을 입력해주세요.');
     else setnicknameError('');
 
@@ -91,8 +92,8 @@ export default function SignUp() {
       emailRegex.test(email) &&
       passwordRegex.test(password) &&
       password === rePassword &&
-      nameRegex.test(Name)
-      
+      nameRegex.test(Name) &&
+      nickname.length > 0
     ) {
       onhandlePost(joinData); // 회원가입 정보 post
     }
