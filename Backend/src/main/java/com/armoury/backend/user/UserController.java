@@ -2,21 +2,19 @@ package com.armoury.backend.user;
 
 import com.armoury.backend.config.BaseException;
 import com.armoury.backend.config.BaseResponse;
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponse;
-import com.example.demo.src.user.model.*;
-import com.example.demo.utils.JwtService;
+import com.armoury.backend.user.model.*;
+import com.armoury.backend.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.demo.config.BaseResponseStatus.POST_USERS_EMPTY_EMAIL;
-import static com.example.demo.config.BaseResponseStatus.POST_USERS_INVALID_EMAIL;
-import static com.example.demo.utils.ValidationRegex.isRegexEmail;
+import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_EMPTY_EMAIL;
+import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_INVALID_EMAIL;
+import static com.armoury.backend.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 

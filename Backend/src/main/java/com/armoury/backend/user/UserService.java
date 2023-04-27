@@ -1,19 +1,19 @@
 package com.armoury.backend.user;
 
 
-import com.example.demo.config.BaseException;
+import com.armoury.backend.config.BaseException;
 
-import com.example.demo.src.user.model.PatchUserReq;
-import com.example.demo.src.user.model.PostUserReq;
-import com.example.demo.src.user.model.PostUserRes;
-import com.example.demo.utils.JwtService;
-import com.example.demo.utils.SHA256;
+import com.armoury.backend.user.model.PatchUserReq;
+import com.armoury.backend.user.model.PostUserReq;
+import com.armoury.backend.user.model.PostUserRes;
+import com.armoury.backend.utils.JwtService;
+import com.armoury.backend.utils.SHA256;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.example.demo.config.BaseResponseStatus.*;
+import static com.armoury.backend.config.BaseResponseStatus.*;
 
 // Service Create, Update, Delete 의 로직 처리
 @Service
