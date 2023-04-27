@@ -23,6 +23,10 @@ public class MemberService {
         // repository의 save메서드 호출 (조건. entity객체를 넘겨줘야 함)
     }
 
+    public String test(){
+        return "Test service";
+    }
+
     public MemberDTO login(MemberDTO memberDTO) {
         /*
             1. 회원이 입력한 이메일로 DB에서 조회를 함

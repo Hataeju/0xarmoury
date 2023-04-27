@@ -1,7 +1,8 @@
 package com.armoury.backend.controller;
 
+import com.armoury.backend.config.BaseResponse;
 import com.armoury.backend.dto.MemberDTO;
-import com.armoury.backend.service.MemberService
+import com.armoury.backend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
     // 생성자 주입
@@ -23,16 +24,16 @@ public class MemberController {
     }
 
     @PostMapping("/member/save")
-    public String save(@ModelAttribute MemberDTO memberDTO) {
+    public BaseResponse<String> save(@ModelAttribute MemberDTO memberDTO) {
         System.out.println("MemberController.save");
         System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO);
-        return "login";
+        return new BaseResponse<>("logIn");
     }
 
     @GetMapping("/member/login")
-    public String loginForm() {
-        return "login";
+    public BaseResponse<String> loginForm() {
+        return new BaseResponse<>("login");
     }
 
     @PostMapping("/member/login")
