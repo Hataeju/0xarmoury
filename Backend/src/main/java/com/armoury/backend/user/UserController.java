@@ -9,12 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_EMPTY_EMAIL;
-import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_INVALID_EMAIL;
+import static com.armoury.backend.config.BaseResponseStatus.*;
 import static com.armoury.backend.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/users")
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -22,14 +21,21 @@ public class UserController {
     private final UserProvider userProvider;
     @Autowired
     private final UserService userService;
+    @Autowired
+    private final JwtService jwtService;
 
 
-    public UserController(UserProvider userProvider, UserService userService){
+    public UserController(JwtService jwtService, UserProvider userProvider, UserService userService){
+        this.jwtService = jwtService;
         this.userProvider = userProvider;
         this.userService = userService;
     }
 
-
+    @ResponseBody
+    @GetMapping("/test")
+    public BaseResponse<String> testAPI(){
+        return new BaseResponse<>("Test");
+    }
 
     /**
      * 회원 조회 API
@@ -116,8 +122,25 @@ public class UserController {
             PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getNickName());
             userService.modifyUserName(patchUserReq);
 
-            String result = "";
-        return new BaseResponse<>(result);
+            String result = "회원 정보 수정 완료";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**  로그인 API */
+    @ResponseBody
+    @PostMapping("/logIn")
+    public BaseResponse<PostUserRes> logIn(@RequestBody PostLoginReq postLoginReq){
+        try {
+            if (postLoginReq.getId() == null)
+                return new BaseResponse<>(USERS_EMPTY_USER_ID);
+            else if (postLoginReq.getPwd() == null)
+                return new BaseResponse<>(POST_USERS_EMPTY_PASSWORD);
+
+            PostUserRes postUserRes = userService.logIn(postLoginReq);
+            return new BaseResponse<>(postUserRes);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

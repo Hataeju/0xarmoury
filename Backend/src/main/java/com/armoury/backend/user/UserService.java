@@ -3,9 +3,8 @@ package com.armoury.backend.user;
 
 import com.armoury.backend.config.BaseException;
 
-import com.armoury.backend.user.model.PatchUserReq;
-import com.armoury.backend.user.model.PostUserReq;
-import com.armoury.backend.user.model.PostUserRes;
+import com.armoury.backend.config.BaseResponse;
+import com.armoury.backend.user.model.*;
 import com.armoury.backend.utils.JwtService;
 import com.armoury.backend.utils.SHA256;
 import org.slf4j.Logger;
@@ -33,6 +32,22 @@ public class UserService {
 
     }
 
+    public PostUserRes logIn(PostLoginReq postLoginReq) throws BaseException {
+        User user = userDao.getPwd(postLoginReq.getId());
+        String encryptPwd;
+        try {
+            encryptPwd = SHA256.encrypt(postLoginReq.getPwd());
+        } catch (Exception exception) {
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+        }
+        if (user.getPwd().equals(encryptPwd)) {
+            int userIdx = user.getUserIdx();
+            String jwt = jwtService.createJwt(userIdx);
+            return new PostUserRes(userIdx, jwt);
+        } else
+            throw new BaseException(FAILED_TO_LOGIN);
+    }
+
 
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         // 이메일 중복 확인
@@ -52,7 +67,7 @@ public class UserService {
             //jwt 발급.
             // TODO: jwt는 다음주차에서 배울 내용입니다!
             String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
+            return new PostUserRes(userIdx, jwt);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
