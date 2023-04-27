@@ -84,16 +84,15 @@ export default function SignUp() {
     if (!nameRegex.test(Name) || Name.length < 1) setNameError('올바른 이름을 입력해주세요.');
     else setNameError('');
 
-    const nicknameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!nicknameRegex.test(nickname) || nickname.length < 1) setnicknameError('올바른 닉네임을 입력해주세요.');
-    else setNameError('');
+    if (nickname.length < 1) setnicknameError('닉네임을 입력해주세요.');
+    else setnicknameError('');
 
     if (
       emailRegex.test(email) &&
       passwordRegex.test(password) &&
       password === rePassword &&
-      nameRegex.test(Name) &&
-      nicknameRegex.test(nickname)
+      nameRegex.test(Name)
+      
     ) {
       onhandlePost(joinData); // 회원가입 정보 post
     }
