@@ -158,7 +158,7 @@ export default function SignUp() {
                   error={emailError !== '' || false}
                 />
               </Grid>
-              <FormHelperTexts>{emailError}</FormHelperTexts>
+              <FormHelperTexts sx={{color: '#DB0000'}}>{emailError}</FormHelperTexts>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -171,7 +171,7 @@ export default function SignUp() {
                   error={passwordState !== '' || false}
                 />
               </Grid>
-              <FormHelperTexts>{passwordState}</FormHelperTexts>
+              <FormHelperTexts sx={{color: '#DB0000'}}>{passwordState}</FormHelperTexts>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -183,7 +183,7 @@ export default function SignUp() {
                   error={passwordError !== '' || false}
                 />
               </Grid>
-              <FormHelperTexts>{passwordError}</FormHelperTexts>
+              <FormHelperTexts sx={{color: '#DB0000'}}>{passwordError}</FormHelperTexts>
             </Grid>
             <Button
               type="submit"
