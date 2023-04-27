@@ -35,7 +35,7 @@ export default function SignUp() {
 
     // post
     await axios
-      .post('/member/join', postData) //API 입력
+      .post('/users', postData) //API 입력
       .then(function (response) {
         console.log(response, '성공');
         Navigate.push('/SignIn');

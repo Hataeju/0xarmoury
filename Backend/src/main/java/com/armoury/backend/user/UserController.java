@@ -14,7 +14,7 @@ import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_INVALID_E
 import static com.armoury.backend.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/users")
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
