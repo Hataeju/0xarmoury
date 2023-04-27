@@ -31,11 +31,18 @@ dependencies {
 
     // DB
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation ('org.springframework.boot:spring-boot-starter-jdbc')
     implementation 'mysql:mysql-connector-java:8.0.26'
     runtimeOnly 'mysql:mysql-connector-java'
 
     // Spring Boot Starter
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Security, Authentication
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 }
 
 tasks.named('test') {
