@@ -24,12 +24,14 @@ export default function SignUp() {
   const [emailError, setEmailError] = useState('');
   const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [NameError, setNameError] = useState('');
+  const [nicknameError, setnicknameError] = useState('');
   const [registerError, setRegisterError] = useState('');
   const Navigate = useNavigate();
 
   const onhandlePost = async (data) => {
-    const { email, firstName, lastNmae, nickname, password } = data;
-    const postData = { email, firstName, lastNmae, nickname, password };
+    const { email, Name, nickname, password } = data;
+    const postData = { email, Name, nickname, password };
 
     // post
     await axios
@@ -53,13 +55,12 @@ export default function SignUp() {
       name: data.get('name'),
       password: data.get('password'),
       rePassword: data.get('rePassword'),
-      firstname: data.get('firstName'),
-      lastName: data.get('lastName'),
+      Name: data.get('Name'),
       nickname: data.get('nickname')
     };
 
     //이건 왜 하는데?
-    const  { email, firstName, lastNmae, nickname, password, rePassword } = joinData;
+    const  { email, Name, nickname, password, rePassword } = joinData;
 
     // 유효성 검사
 
@@ -78,10 +79,21 @@ export default function SignUp() {
     if (password !== rePassword) setPasswordError('비밀번호가 일치하지 않습니다.');
     else setPasswordError('');
 
+    // 이름 유효성 체크
+    const nameRegex = /^[가-힣a-zA-Z]+$/;
+    if (!nameRegex.test(Name) || Name.length < 1) setNameError('올바른 이름을 입력해주세요.');
+    else setNameError('');
+
+    const nicknameRegex = /^[가-힣a-zA-Z]+$/;
+    if (!nicknameRegex.test(nickname) || nickname.length < 1) setnicknameError('올바른 닉네임을 입력해주세요.');
+    else setNameError('');
+
     if (
       emailRegex.test(email) &&
       passwordRegex.test(password) &&
-      password === rePassword
+      password === rePassword &&
+      nameRegex.test(Name) &&
+      nicknameRegex.test(nickname)
     ) {
       onhandlePost(joinData); // 회원가입 정보 post
     }
@@ -116,26 +128,18 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="Name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="Name"
+                  label="Name"
                   autoFocus
+                  error={NameError !== '' || false}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
+                 <FormHelperTexts sx={{color: '#DB0000'}}>{NameError}</FormHelperTexts>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -145,7 +149,9 @@ export default function SignUp() {
                   label="Nickame"
                   name="nickname"
                   autoComplete="nickname"
+                  error={nicknameError !== '' || false}
                 />
+                 <FormHelperTexts sx={{color: '#DB0000'}}>{nicknameError}</FormHelperTexts>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -157,8 +163,8 @@ export default function SignUp() {
                   autoComplete="email"
                   error={emailError !== '' || false}
                 />
+                <FormHelperTexts sx={{color: '#DB0000'}}>{emailError}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts sx={{color: '#DB0000'}}>{emailError}</FormHelperTexts>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -170,8 +176,8 @@ export default function SignUp() {
                   autoComplete="new-password"
                   error={passwordState !== '' || false}
                 />
+                 <FormHelperTexts sx={{color: '#DB0000'}}>{passwordState}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts sx={{color: '#DB0000'}}>{passwordState}</FormHelperTexts>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -182,8 +188,8 @@ export default function SignUp() {
                   id="rePassword"
                   error={passwordError !== '' || false}
                 />
+                <FormHelperTexts sx={{color: '#DB0000'}}>{passwordError}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts sx={{color: '#DB0000'}}>{passwordError}</FormHelperTexts>
             </Grid>
             <Button
               type="submit"
