@@ -28,7 +28,9 @@ export default function SignUp() {
   const [nicknameError, setnicknameError] = useState('');
   const [registerError, setRegisterError] = useState('');
   const Navigate = useNavigate();
+  const [showInput, setShowInput] = useState(false);
 
+  
   const onhandlePost = async (data) => {
     const { email, Name, nickname, password } = data;
     const postData = { email, Name, nickname, password };
@@ -46,6 +48,11 @@ export default function SignUp() {
       });
       // TODO: 입력된 정보를 서버에 전송하는 로직 작성
   };
+
+  const handleButtonClick = (event) => {
+    setShowInput(true);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault(); // 기본 이벤트 동작 취소
 
@@ -59,7 +66,7 @@ export default function SignUp() {
       nickname: data.get('nickname')
     };
 
-    //이건 왜 하는데?
+    // 속성을 각각 개별 변수로 추출
     const  { email, Name, nickname, password, rePassword } = joinData;
 
     // 유효성 검사
@@ -165,6 +172,20 @@ export default function SignUp() {
                 />
                 <FormHelperTexts sx={{color: '#DB0000'}}>{emailError}</FormHelperTexts>
               </Grid>
+              <Grid container spacing={2} justifyContent="flex-end"> {/*끝 정렬*/}
+                <Grid item sx={{mt:1}}>
+                  <Button variant="outlined" onClick={handleButtonClick}>verify</Button>
+                </Grid>
+                {showInput && (
+                  <Grid item sx={{mt:1}}>
+                    <TextField 
+                      name="validation"
+                      label="validation code"
+                      id="validation"
+                      />
+                  </Grid>
+                  )}
+            </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
