@@ -85,7 +85,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/create") // (POST) 127.0.0.1:9000/users
-    public BaseResponse<PostUserRes> createUser(PostUserReq postUserReq) {
+    public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
         System.out.println(postUserReq.getEmail());
         System.out.println(postUserReq.getPassword());
         System.out.println(postUserReq.getNickName());
