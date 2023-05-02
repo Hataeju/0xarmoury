@@ -32,8 +32,10 @@ export default function SignUp() {
 
   
   const onhandlePost = async (data) => {
-    const { email, Name, nickname, password } = data;
-    const postData = { email, Name, nickname, password };
+    const { email, nickname, password } = data;
+    const postData = { email, nickname, password };
+
+    console.log(postData);
 
     // post
     await axios
@@ -67,7 +69,7 @@ export default function SignUp() {
     };
 
     // 속성을 각각 개별 변수로 추출
-    const  { email, Name, nickname, password, rePassword } = joinData;
+    const  { email, nickname, password, rePassword } = joinData;
 
     // 유효성 검사
 
