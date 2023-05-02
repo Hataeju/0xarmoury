@@ -4,8 +4,6 @@ import com.armoury.backend.config.BaseException;
 import com.armoury.backend.config.BaseResponse;
 import com.armoury.backend.user.model.*;
 import com.armoury.backend.utils.JwtService;
-import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +85,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/create") // (POST) 127.0.0.1:9000/users
-    public BaseResponse<PostUserRes> createUser(PostUserReq postUserReq) {
+    public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
         System.out.println(postUserReq.getEmail());
         System.out.println(postUserReq.getPassword());
         System.out.println(postUserReq.getNickName());
@@ -101,7 +99,6 @@ public class UserController {
         try{
             PostUserRes postUserRes = userService.createUser(postUserReq);
             System.out.println("createSuccess!");
-            logger.info("log test");
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
