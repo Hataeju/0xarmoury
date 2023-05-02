@@ -34,10 +34,9 @@ export default function SignUp() {
   const onhandlePost = async (data) => {
     const { email, nickName, password } = data;
     const postData = { email, nickName, password };
-
     // post
     await axios
-      .post('http://localhost:8080/users/create', postData) //API 입력
+      .post('/users/create', postData) //API 입력
       .then(function (response) {
         console.log(response, '성공');
         Navigate.push('/SignIn');
