@@ -66,8 +66,10 @@ public class UserService {
         try{
             int userIdx = userDao.createUser(postUserReq);
             String jwt = jwtService.createJwt(userIdx);
+            System.out.println("jwt success!");
             return new PostUserRes(userIdx, jwt);
         } catch (Exception exception) {
+            System.out.println(exception);
             throw new BaseException(DATABASE_ERROR);
         }
     }

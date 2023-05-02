@@ -4,6 +4,8 @@ import com.armoury.backend.config.BaseException;
 import com.armoury.backend.config.BaseResponse;
 import com.armoury.backend.user.model.*;
 import com.armoury.backend.utils.JwtService;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import static com.armoury.backend.config.BaseResponseStatus.*;
 import static com.armoury.backend.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/users")
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -81,9 +83,14 @@ public class UserController {
      * @return BaseResponse<PostUserRes>
      */
     // Body
+
+
     @ResponseBody
-    @PostMapping("") // (POST) 127.0.0.1:9000/users
-    public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
+    @PostMapping("/create") // (POST) 127.0.0.1:9000/users
+    public BaseResponse<PostUserRes> createUser(PostUserReq postUserReq) {
+        System.out.println(postUserReq.getEmail());
+        System.out.println(postUserReq.getPassword());
+        System.out.println(postUserReq.getNickName());
         if(postUserReq.getEmail() == null){
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
@@ -93,6 +100,7 @@ public class UserController {
         }
         try{
             PostUserRes postUserRes = userService.createUser(postUserReq);
+            System.out.println("createSuccess!");
             logger.info("log test");
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
@@ -130,7 +138,7 @@ public class UserController {
 
     /**  로그인 API */
     @ResponseBody
-    @PostMapping("/logIn")
+    @PostMapping("/login")
     public BaseResponse<PostUserRes> logIn(@RequestBody PostLoginReq postLoginReq){
         try {
             if (postLoginReq.getEmail() == null)
