@@ -13,7 +13,7 @@ import static com.armoury.backend.config.BaseResponseStatus.*;
 import static com.armoury.backend.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping("/users")
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -46,7 +46,7 @@ public class UserController {
      */
     //Query String
     @ResponseBody
-    @GetMapping("") // (GET) 127.0.0.1:9000/users
+    @GetMapping("/getusers") // (GET) 127.0.0.1:9000/users
     public BaseResponse<GetUserRes> getUsers(@RequestParam(required = true) String Email) {
         try{
             if(Email.length()==0){
@@ -98,9 +98,9 @@ public class UserController {
         }
         try{
             PostUserRes postUserRes = userService.createUser(postUserReq);
-            System.out.println("createSuccess!");
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
+            System.out.println(exception);
             return new BaseResponse<>((exception.getStatus()));
         }
     }

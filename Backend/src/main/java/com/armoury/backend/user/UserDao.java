@@ -76,9 +76,6 @@ public class UserDao {
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
         String lastInsertIdQuery = "select last_insert_id()";
-        System.out.println(lastInsertIdQuery);
-        System.out.println(this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class));
-        System.out.println("success!");
         return this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class);
     }
 
