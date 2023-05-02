@@ -9,5 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetToolRes {
     private int toolIdx;
-
+    private String toolName;
+    private String definition;
+    private String kaliInfo;
+    private String mitreInfo;
+    private String wikiInfo;
+    private String toolUrl;
 }

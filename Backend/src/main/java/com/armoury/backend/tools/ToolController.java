@@ -2,6 +2,7 @@ package com.armoury.backend.tools;
 
 import com.armoury.backend.config.BaseException;
 import com.armoury.backend.config.BaseResponse;
+import com.armoury.backend.tools.model.GetToolRes;
 import com.armoury.backend.user.model.GetUserRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +23,13 @@ public class ToolController {
 
     @ResponseBody
     @GetMapping("/{toolIdx}")
-    public BaseResponse<String> getToolByIdx (@PathVariable("toolIdx")int toolIdx){
+    public BaseResponse<GetToolRes> getToolByIdx (@PathVariable("toolIdx")int toolIdx){
         try{
-            String result = toolProvider.getToolByIdx(toolIdx);
-            return new BaseResponse<>(result);
+            GetToolRes toolRes = toolProvider.getToolByIdx(toolIdx);
+            return new BaseResponse<>(toolRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
 }
