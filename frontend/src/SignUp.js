@@ -32,15 +32,10 @@ export default function SignUp() {
 
   
   const onhandlePost = async (data) => {
-<<<<<<< Updated upstream
     const { email, nickname, password } = data;
     const postData = { email, nickname, password };
 
     console.log(postData);
-=======
-    const { email, nickName, password } = data;
-    const postData = { email, nickName, password };
->>>>>>> Stashed changes
 
     // post
     await axios
@@ -72,11 +67,7 @@ export default function SignUp() {
     };
 
     // 속성을 각각 개별 변수로 추출
-<<<<<<< Updated upstream
     const  { email, nickname, password, rePassword } = joinData;
-=======
-    const  { email, nickName, password, rePassword } = joinData;
->>>>>>> Stashed changes
 
     // 유효성 검사
 
