@@ -3,6 +3,7 @@ package com.armoury.backend.user;
 
 import com.armoury.backend.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -55,20 +56,26 @@ public class UserDao {
                 getUsersByIdxParams);
     }
 
-    public User getPwd(String email){
+    public User getPwd(String email) {
         String getPwdQuery = "SELECT userIdx, nickName, email, pwd, grade FROM User WHERE email = ?";
-        String userEmailParams = email;
-        return this.jdbcTemplate.queryForObject(getPwdQuery,
-                (rs, rowNum) -> new User(
-                        rs.getInt("userIdx"),
-                        rs.getString("name"),
-                        rs.getString("nickName"),
-                        rs.getString("email"),
-                        rs.getString("id"),
-                        rs.getString("pwd"),
-                        rs.getInt("grade")),
-                userEmailParams);
+        Object[] userEmailParams = { email };
+        try {
+            User user = this.jdbcTemplate.queryForObject(getPwdQuery, userEmailParams, (rs, rowNum) -> new User(
+                    rs.getInt("userIdx"),
+                    rs.getString("nickName"),
+                    rs.getString("email"),
+                    rs.getString("pwd"),
+                    rs.getInt("grade")
+            ));
+            System.out.println(user);
+            return user;
+
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println(e);
+            return null;
+        }
     }
+
 
     public int createUser(PostUserReq postUserReq){
         String createUserQuery = "insert into User (nickName, email, pwd) VALUES (?,?,?)";

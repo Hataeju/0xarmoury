@@ -34,19 +34,26 @@ public class UserService {
 
     public PostUserRes logIn(PostLoginReq postLoginReq) throws BaseException {
         User user = userDao.getPwd(postLoginReq.getEmail());
+        if (user == null) {
+            throw new BaseException(FAILED_TO_LOGIN);
+        }
+
         String encryptPwd;
         try {
-            encryptPwd = SHA256.encrypt(postLoginReq.getPwd());
+            encryptPwd = SHA256.encrypt(postLoginReq.getPassword());
         } catch (Exception exception) {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
+
         if (user.getPwd().equals(encryptPwd)) {
             int userIdx = user.getUserIdx();
             String jwt = jwtService.createJwt(userIdx);
             return new PostUserRes(userIdx, jwt);
-        } else
+        } else {
             throw new BaseException(FAILED_TO_LOGIN);
+        }
     }
+
 
 
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {

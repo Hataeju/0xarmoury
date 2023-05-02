@@ -140,7 +140,7 @@ public class UserController {
         try {
             if (postLoginReq.getEmail() == null)
                 return new BaseResponse<>(USERS_EMPTY_USER_ID);
-            else if (postLoginReq.getPwd() == null)
+            else if (postLoginReq.getPassword() == null)
                 return new BaseResponse<>(POST_USERS_EMPTY_PASSWORD);
 
             PostUserRes postUserRes = userService.logIn(postLoginReq);
