@@ -86,11 +86,6 @@ export default function SignUp() {
     if (password !== rePassword) setPasswordError('비밀번호가 일치하지 않습니다.');
     else setPasswordError('');
 
-    // 이름 유효성 체크
-    const nameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!nameRegex.test(Name) || Name.length < 1) setNameError('올바른 이름을 입력해주세요.');
-    else setNameError('');
-
     //닉네임 유효성 체크
     if (nickname.length < 1) setnicknameError('닉네임을 입력해주세요.');
     else setnicknameError('');
@@ -99,7 +94,6 @@ export default function SignUp() {
       emailRegex.test(email) &&
       passwordRegex.test(password) &&
       password === rePassword &&
-      nameRegex.test(Name) &&
       nickname.length > 0
     ) {
       onhandlePost(joinData); // 회원가입 정보 post
@@ -135,19 +129,7 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="Name"
-                  required
-                  fullWidth
-                  id="Name"
-                  label="Name"
-                  autoFocus
-                  error={NameError !== '' || false}
-                />
-                 <FormHelperTexts sx={{color: '#DB0000'}}>{NameError}</FormHelperTexts>
-              </Grid>
+              
               <Grid item xs={12}>
                 <TextField
                   required
