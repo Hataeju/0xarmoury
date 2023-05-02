@@ -24,7 +24,7 @@ export default function SignUp() {
   const [emailError, setEmailError] = useState('');
   const [passwordState, setPasswordState] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [NameError, setNameError] = useState('');
+ // const [NameError, setNameError] = useState('');
   const [nicknameError, setnicknameError] = useState('');
   const [registerError, setRegisterError] = useState('');
   const Navigate = useNavigate();
@@ -32,14 +32,12 @@ export default function SignUp() {
 
   
   const onhandlePost = async (data) => {
-    const { email, nickname, password } = data;
-    const postData = { email, nickname, password };
-
-    console.log(postData);
+    const { email, nickName, password } = data;
+    const postData = { email, nickName, password };
 
     // post
     await axios
-      .post('/users', postData) //API 입력
+      .post('http://localhost:8080/users/create', postData) //API 입력
       .then(function (response) {
         console.log(response, '성공');
         Navigate.push('/SignIn');
@@ -61,15 +59,13 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     const joinData = {
       email: data.get('email'),
-      name: data.get('name'),
       password: data.get('password'),
-      rePassword: data.get('rePassword'),
-      Name: data.get('Name'),
-      nickname: data.get('nickname')
+      nickName: data.get('nickname'),
+      rePassword : data.get('rePassword')
     };
 
     // 속성을 각각 개별 변수로 추출
-    const  { email, nickname, password, rePassword } = joinData;
+    const  { email, nickName, password, rePassword } = joinData;
 
     // 유효성 검사
 
@@ -89,14 +85,14 @@ export default function SignUp() {
     else setPasswordError('');
 
     //닉네임 유효성 체크
-    if (nickname.length < 1) setnicknameError('닉네임을 입력해주세요.');
+    if (nickName.length < 1) setnicknameError('닉네임을 입력해주세요.');
     else setnicknameError('');
 
     if (
       emailRegex.test(email) &&
       passwordRegex.test(password) &&
       password === rePassword &&
-      nickname.length > 0
+      nickName.length > 0
     ) {
       onhandlePost(joinData); // 회원가입 정보 post
     }
