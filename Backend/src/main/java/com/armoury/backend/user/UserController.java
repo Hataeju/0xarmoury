@@ -49,7 +49,6 @@ public class UserController {
     @GetMapping("") // (GET) 127.0.0.1:9000/users
     public BaseResponse<GetUserRes> getUsers(@RequestParam(required = true) String Email) {
         try{
-            // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
             if(Email.length()==0){
                 return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
             }
@@ -85,7 +84,6 @@ public class UserController {
     @ResponseBody
     @PostMapping("") // (POST) 127.0.0.1:9000/users
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
-        // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
         if(postUserReq.getEmail() == null){
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
@@ -95,6 +93,7 @@ public class UserController {
         }
         try{
             PostUserRes postUserRes = userService.createUser(postUserReq);
+            logger.info("log test");
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
@@ -134,7 +133,7 @@ public class UserController {
     @PostMapping("/logIn")
     public BaseResponse<PostUserRes> logIn(@RequestBody PostLoginReq postLoginReq){
         try {
-            if (postLoginReq.getId() == null)
+            if (postLoginReq.getEmail() == null)
                 return new BaseResponse<>(USERS_EMPTY_USER_ID);
             else if (postLoginReq.getPwd() == null)
                 return new BaseResponse<>(POST_USERS_EMPTY_PASSWORD);

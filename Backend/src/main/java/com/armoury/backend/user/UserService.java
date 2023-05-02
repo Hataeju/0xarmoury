@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public PostUserRes logIn(PostLoginReq postLoginReq) throws BaseException {
-        User user = userDao.getPwd(postLoginReq.getId());
+        User user = userDao.getPwd(postLoginReq.getEmail());
         String encryptPwd;
         try {
             encryptPwd = SHA256.encrypt(postLoginReq.getPwd());
@@ -65,8 +65,6 @@ public class UserService {
         }
         try{
             int userIdx = userDao.createUser(postUserReq);
-            //jwt 발급.
-            // TODO: jwt는 다음주차에서 배울 내용입니다!
             String jwt = jwtService.createJwt(userIdx);
             return new PostUserRes(userIdx, jwt);
         } catch (Exception exception) {
@@ -77,7 +75,7 @@ public class UserService {
     public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
         try{
             int result = userDao.modifyUserName(patchUserReq);
-            if(result == 0){
+            if (result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
         } catch(Exception exception){

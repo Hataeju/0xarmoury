@@ -55,9 +55,9 @@ public class UserDao {
                 getUsersByIdxParams);
     }
 
-    public User getPwd(String id){
-        String getPwdQuery = "SELECT userIdx, name, nickName, email, id, pwd, grade FROM User WHERE id = ?";
-        String userIdParams = id;
+    public User getPwd(String email){
+        String getPwdQuery = "SELECT userIdx, nickName, email, pwd, grade FROM User WHERE email = ?";
+        String userEmailParams = email;
         return this.jdbcTemplate.queryForObject(getPwdQuery,
                 (rs, rowNum) -> new User(
                         rs.getInt("userIdx"),
@@ -67,7 +67,7 @@ public class UserDao {
                         rs.getString("id"),
                         rs.getString("pwd"),
                         rs.getInt("grade")),
-                userIdParams);
+                userEmailParams);
     }
 
     public int createUser(PostUserReq postUserReq){
