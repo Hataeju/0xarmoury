@@ -1,10 +1,9 @@
 package com.armoury.backend.user;
 
 
-import com.armoury.backend.user.model.GetUserRes;
-import com.armoury.backend.user.model.PatchUserReq;
-import com.armoury.backend.user.model.PostUserReq;
+import com.armoury.backend.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -57,13 +56,34 @@ public class UserDao {
                 getUsersByIdxParams);
     }
 
+    public User getPwd(String email) {
+        String getPwdQuery = "SELECT userIdx, nickName, email, pwd, grade FROM User WHERE email = ?";
+        Object[] userEmailParams = { email };
+        try {
+            User user = this.jdbcTemplate.queryForObject(getPwdQuery, userEmailParams, (rs, rowNum) -> new User(
+                    rs.getInt("userIdx"),
+                    rs.getString("nickName"),
+                    rs.getString("email"),
+                    rs.getString("pwd"),
+                    rs.getInt("grade")
+            ));
+            System.out.println(user);
+            return user;
+
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+
     public int createUser(PostUserReq postUserReq){
-        String createUserQuery = "insert into User (name, nickName, phone, email, password) VALUES (?,?,?,?,?)";
-        Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getNickName(),postUserReq.getPhone(), postUserReq.getEmail(), postUserReq.getPassword()};
+        String createUserQuery = "insert into User (nickName, email, pwd) VALUES (?,?,?)";
+        Object[] createUserParams = new Object[]{ postUserReq.getNickName(), postUserReq.getEmail(), postUserReq.getPassword()};
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
-        String lastInserIdQuery = "select last_insert_id()";
-        return this.jdbcTemplate.queryForObject(lastInserIdQuery,int.class);
+        String lastInsertIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class);
     }
 
     public int checkEmail(String email){

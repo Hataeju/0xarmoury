@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import FormHelperTexts from '@mui/material/FormHelperText'
+//import FormControlLabel from '@mui/material/FormControlLabel';
+//import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,10 +13,46 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const [loginError, setLoginError] = useState('');
+  const Navigate = useNavigate();
+  const onhandlePost = async (data) => {
+    const { email, password } = data;
+    const postData = { email, password };
+
+    // post
+    await axios
+      .post('/users/login', postData)  //db 주소? api?
+      .then(function (response) {
+        if (response.data.isSuccess){
+          console.log(response, '성공');
+          Navigate('/mainPage');
+        }
+      })
+      .catch(function (err) {
+        console.log(err);
+        setLoginError('로그인에 실패하였습니다. 다시한번 확인해 주세요.');
+      });
+  };
+
+  //'SIGN IN'버튼 클릭하면 동작
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 기본 이벤트 동작 취소
+
+    const data = new FormData(event.currentTarget);
+    const joinData = {
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+
+    onhandlePost(joinData);
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -46,7 +83,7 @@ export default function SignIn() {
           <Typography component="h1" fontSize='30px'>
             <strong>Sign In</strong>
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -67,23 +104,20 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: '#363636' }}
+              sx={{ mt: 3, mb: 1, bgcolor: '#363636' }}
             >
               Sign In
             </Button>
+            <FormHelperTexts sx={{color: '#DB0000'}}>{loginError}</FormHelperTexts>
             <Grid container>
               <Grid item xs>
                 
               </Grid>
-              <Grid item>
+              <Grid item  sx={{mt:1}}>
                 <Link href="./SignUp" variant="body2" color='#0000A5'>
                   {"Don't have an account? Sign Up"}
                 </Link>

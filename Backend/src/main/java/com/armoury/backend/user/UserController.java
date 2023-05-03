@@ -9,12 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_EMPTY_EMAIL;
-import static com.armoury.backend.config.BaseResponseStatus.POST_USERS_INVALID_EMAIL;
+import static com.armoury.backend.config.BaseResponseStatus.*;
 import static com.armoury.backend.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/users")
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -22,14 +21,21 @@ public class UserController {
     private final UserProvider userProvider;
     @Autowired
     private final UserService userService;
+    @Autowired
+    private final JwtService jwtService;
 
 
-    public UserController(UserProvider userProvider, UserService userService){
+    public UserController(JwtService jwtService, UserProvider userProvider, UserService userService){
+        this.jwtService = jwtService;
         this.userProvider = userProvider;
         this.userService = userService;
     }
 
-
+    @ResponseBody
+    @GetMapping("/test")
+    public BaseResponse<String> testAPI(){
+        return new BaseResponse<>("Test");
+    }
 
     /**
      * 회원 조회 API
@@ -40,10 +46,9 @@ public class UserController {
      */
     //Query String
     @ResponseBody
-    @GetMapping("") // (GET) 127.0.0.1:9000/users
+    @GetMapping("/getusers") // (GET) 127.0.0.1:9000/users
     public BaseResponse<GetUserRes> getUsers(@RequestParam(required = true) String Email) {
         try{
-            // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
             if(Email.length()==0){
                 return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
             }
@@ -76,10 +81,14 @@ public class UserController {
      * @return BaseResponse<PostUserRes>
      */
     // Body
+
+
     @ResponseBody
-    @PostMapping("") // (POST) 127.0.0.1:9000/users
+    @PostMapping("/create") // (POST) 127.0.0.1:9000/users
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
-        // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
+        System.out.println(postUserReq.getEmail());
+        System.out.println(postUserReq.getPassword());
+        System.out.println(postUserReq.getNickName());
         if(postUserReq.getEmail() == null){
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
@@ -91,6 +100,7 @@ public class UserController {
             PostUserRes postUserRes = userService.createUser(postUserReq);
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
+            System.out.println(exception);
             return new BaseResponse<>((exception.getStatus()));
         }
     }
@@ -116,8 +126,25 @@ public class UserController {
             PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getNickName());
             userService.modifyUserName(patchUserReq);
 
-            String result = "";
-        return new BaseResponse<>(result);
+            String result = "회원 정보 수정 완료";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**  로그인 API */
+    @ResponseBody
+    @PostMapping("/login")
+    public BaseResponse<PostUserRes> logIn(@RequestBody PostLoginReq postLoginReq){
+        try {
+            if (postLoginReq.getEmail() == null)
+                return new BaseResponse<>(USERS_EMPTY_USER_ID);
+            else if (postLoginReq.getPassword() == null)
+                return new BaseResponse<>(POST_USERS_EMPTY_PASSWORD);
+
+            PostUserRes postUserRes = userService.logIn(postLoginReq);
+            return new BaseResponse<>(postUserRes);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

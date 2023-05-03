@@ -3,9 +3,8 @@ package com.armoury.backend.user;
 
 import com.armoury.backend.config.BaseException;
 
-import com.armoury.backend.user.model.PatchUserReq;
-import com.armoury.backend.user.model.PostUserReq;
-import com.armoury.backend.user.model.PostUserRes;
+import com.armoury.backend.config.BaseResponse;
+import com.armoury.backend.user.model.*;
 import com.armoury.backend.utils.JwtService;
 import com.armoury.backend.utils.SHA256;
 import org.slf4j.Logger;
@@ -33,6 +32,29 @@ public class UserService {
 
     }
 
+    public PostUserRes logIn(PostLoginReq postLoginReq) throws BaseException {
+        User user = userDao.getPwd(postLoginReq.getEmail());
+        if (user == null) {
+            throw new BaseException(FAILED_TO_LOGIN);
+        }
+
+        String encryptPwd;
+        try {
+            encryptPwd = SHA256.encrypt(postLoginReq.getPassword());
+        } catch (Exception exception) {
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+        }
+
+        if (user.getPwd().equals(encryptPwd)) {
+            int userIdx = user.getUserIdx();
+            String jwt = jwtService.createJwt(userIdx);
+            return new PostUserRes(userIdx, jwt);
+        } else {
+            throw new BaseException(FAILED_TO_LOGIN);
+        }
+    }
+
+
 
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         // 이메일 중복 확인
@@ -43,17 +65,17 @@ public class UserService {
         String pwd;
         try{
             //암호화
-            pwd = new SHA256().encrypt(postUserReq.getPassword());  postUserReq.setPassword(pwd);
+            pwd = new SHA256().encrypt(postUserReq.getPassword());
+            postUserReq.setPassword(pwd);
         } catch (Exception ignored) {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
         try{
             int userIdx = userDao.createUser(postUserReq);
-            //jwt 발급.
-            // TODO: jwt는 다음주차에서 배울 내용입니다!
             String jwt = jwtService.createJwt(userIdx);
-            return new PostUserRes(jwt,userIdx);
+            return new PostUserRes(userIdx, jwt);
         } catch (Exception exception) {
+            System.out.println(exception);
             throw new BaseException(DATABASE_ERROR);
         }
     }
@@ -61,7 +83,7 @@ public class UserService {
     public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
         try{
             int result = userDao.modifyUserName(patchUserReq);
-            if(result == 0){
+            if (result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
         } catch(Exception exception){
