@@ -38,8 +38,10 @@ export default function SignUp() {
     await axios
       .post('/users/create', postData) //API 입력
       .then(function (response) {
-        console.log(response, '성공');
-        Navigate.push('/SignIn');
+        if (response.data.isSuccess){
+          console.log(response, '성공');
+          Navigate('/SignIn');
+        }
       })
       .catch(function (err) {
         console.log(err);

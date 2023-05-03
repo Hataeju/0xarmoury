@@ -21,17 +21,19 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [loginError, setLoginError] = useState('');
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
   const onhandlePost = async (data) => {
     const { email, password } = data;
     const postData = { email, password };
 
     // post
     await axios
-      .post('localhost:8080/users/login', postData)  //db 주소? api?
+      .post('/users/login', postData)  //db 주소? api?
       .then(function (response) {
-        console.log(response, '성공');
-        navigate.push('/');
+        if (response.data.isSuccess){
+          console.log(response, '성공');
+          Navigate('/SignIn');
+        }
       })
       .catch(function (err) {
         console.log(err);
