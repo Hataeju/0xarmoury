@@ -2,13 +2,13 @@ package com.armoury.backend.gallery;
 
 import com.armoury.backend.config.BaseException;
 import com.armoury.backend.config.BaseResponse;
+import com.armoury.backend.gallery.model.PostInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/gallery")
@@ -26,14 +26,16 @@ public class GalleryController {
         this.galleryService = galleryService;
     }
 
-
     @ResponseBody
-    @GetMapping("/posts")
-    public BaseResponse<String> getPostsInfo(){
+    @GetMapping("/posts/{pageNumber}")
+    public BaseResponse<List<PostInfo>> getPostsInfo(@PathVariable("pageNumber") int pageNum){
         try {
-
+            List<PostInfo> infoList = galleryProvider.getPostInfo(pageNum*5 - 5);
+            return new BaseResponse<>(infoList);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
 }
